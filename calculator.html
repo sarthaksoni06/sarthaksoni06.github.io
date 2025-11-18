@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendOperator('/')">/</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            <button class="operator" onclick="deleteLast()">⌫</button>
+            
+            <button class="number" onclick="appendNumber('7')">7</button>
+            <button class="number" onclick="appendNumber('8')">8</button>
+            <button class="number" onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('-')">-</button>
+            
+            <button class="number" onclick="appendNumber('4')">4</button>
+            <button class="number" onclick="appendNumber('5')">5</button>
+            <button class="number" onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            
+            <button class="number" onclick="appendNumber('1')">1</button>
+            <button class="number" onclick="appendNumber('2')">2</button>
+            <button class="number" onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('.')">.</button>
+            
+            <button class="number zero" onclick="appendNumber('0')">0</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let currentInput = '0';
+        let shouldResetDisplay = false;
+
+        function updateDisplay() {
+            display.textContent = currentInput;
+        }
+
+        function appendNumber(number) {
+            if (shouldResetDisplay) {
+                currentInput = '0';
+                shouldResetDisplay = false;
+            }
+            
+            if (currentInput === '0' && number !== '.') {
+                currentInput = number;
+            } else {
+                currentInput += number;
+            }
+            updateDisplay();
+        }
+
+        function appendOperator(operator) {
+            if (shouldResetDisplay) {
+                shouldResetDisplay = false;
+            }
+
+            const lastChar = currentInput[currentInput.length - 1];
+            
+            if (operator === '.') {
+                // Handle decimal point
+                const parts = currentInput.split(/[\+\-\*\/]/);
+                const lastPart = parts[parts.length - 1];
+                if (!lastPart.includes('.')) {
+                    currentInput += '.';
+                }
+            } else {
+                // Handle operators
+                if (['+', '-', '*', '/'].includes(lastChar)) {
+                    currentInput = currentInput.slice(0, -1) + operator;
+                } else {
+                    currentInput += operator;
+                }
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            shouldResetDisplay = false;
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                // Replace × with * for calculation
+                let expression = currentInput.replace(/×/g, '*');
+                
+                // Validate expression
+                if (!/^[0-9+\-*/. ]+$/.test(expression)) {
+                    throw new Error('Invalid expression');
+                }
+
+                // Evaluate the expression
+                let result = Function('"use strict"; return (' + expression + ')')();
+                
+                // Round to avoid floating point errors
+                result = Math.round(result * 100000000) / 100000000;
+                
+                currentInput = result.toString();
+                shouldResetDisplay = true;
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                shouldResetDisplay = true;
+                updateDisplay();
+                setTimeout(() => {
+                    clearDisplay();
+                }, 2000);
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            
+            if (key >= '0' && key <= '9') {
+                appendNumber(key);
+            } else if (key === '.') {
+                appendOperator('.');
+            } else if (key === '+') {
+                appendOperator('+');
+            } else if (key === '-') {
+                appendOperator('-');
+            } else if (key === '*') {
+                appendOperator('*');
+            } else if (key === '/') {
+                event.preventDefault();
+                appendOperator('/');
+            } else if (key === 'Enter' || key === '=') {
+                event.preventDefault();
+                calculate();
+            } else if (key === 'Escape' || key === 'c' || key === 'C') {
+                clearDisplay();
+            } else if (key === 'Backspace') {
+                deleteLast();
+            }
+        });
+    </script>
+</body>
+</html>

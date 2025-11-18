@@ -3,156 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calculator</title>
-    <link rel="stylesheet" href="calculator.css">
-</head>
-<body>
-    <div class="calculator">
-        <div class="display" id="display">0</div>
-        <div class="buttons">
-            <button class="clear" onclick="clearDisplay()">C</button>
-            <button class="operator" onclick="appendOperator('/')">/</button>
-            <button class="operator" onclick="appendOperator('*')">×</button>
-            <button class="operator" onclick="deleteLast()">⌫</button>
-            
-            <button class="number" onclick="appendNumber('7')">7</button>
-            <button class="number" onclick="appendNumber('8')">8</button>
-            <button class="number" onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('-')">-</button>
-            
-            <button class="number" onclick="appendNumber('4')">4</button>
-            <button class="number" onclick="appendNumber('5')">5</button>
-            <button class="number" onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
-            
-            <button class="number" onclick="appendNumber('1')">1</button>
-            <button class="number" onclick="appendNumber('2')">2</button>
-            <button class="number" onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="appendOperator('.')">.</button>
-            
-            <button class="number zero" onclick="appendNumber('0')">0</button>
-            <button class="equals" onclick="calculate()">=</button>
-        </div>
-    </div>
+    <title>Sarthak Soni | Strategic Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Tailwind Configuration for the 'Inter' font */
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #141414; /* Deep Charcoal Background */
+            color: #ffffff; /* White Text */
+        }
+        /* Style for the button hover effect */
+        .cta-button { transition: background-color 0.3s, transform 0.2s; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(229, 9, 20, 0.6); } /* Red Shadow */
+        
+        .project-card { 
+            transition: all 0.3s ease-in-out; 
+            background-color: #1f1f1f; /* Slightly lighter card background */
+            min-width: 300px; /* Set card width for horizontal scrolling */
+            max-width: 300px;
+        }
+        .project-card:hover { 
+            transform: scale(1.05); /* Netflix-style zoom on hover */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); 
+            z-index: 10;
+        }
 
+        /* Custom scrollbar for horizontal row */
+        .horizontal-row::-webkit-scrollbar {
+            height: 8px;
+        }
+        .horizontal-row::-webkit-scrollbar-thumb {
+            background-color: #E50914; /* Netflix Red Scrollbar */
+            border-radius: 10px;
+        }
+        .horizontal-row::-webkit-scrollbar-track {
+            background: #2a2a2a;
+        }
+    </style>
     <script>
-        let display = document.getElementById('display');
-        let currentInput = '0';
-        let shouldResetDisplay = false;
-
-        function updateDisplay() {
-            display.textContent = currentInput;
-        }
-
-        function appendNumber(number) {
-            if (shouldResetDisplay) {
-                currentInput = '0';
-                shouldResetDisplay = false;
-            }
-            
-            if (currentInput === '0' && number !== '.') {
-                currentInput = number;
-            } else {
-                currentInput += number;
-            }
-            updateDisplay();
-        }
-
-        function appendOperator(operator) {
-            if (shouldResetDisplay) {
-                shouldResetDisplay = false;
-            }
-
-            const lastChar = currentInput[currentInput.length - 1];
-            
-            if (operator === '.') {
-                // Handle decimal point
-                const parts = currentInput.split(/[\+\-\*\/]/);
-                const lastPart = parts[parts.length - 1];
-                if (!lastPart.includes('.')) {
-                    currentInput += '.';
-                }
-            } else {
-                // Handle operators
-                if (['+', '-', '*', '/'].includes(lastChar)) {
-                    currentInput = currentInput.slice(0, -1) + operator;
-                } else {
-                    currentInput += operator;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#E50914', /* Netflix Red */
+                        'primary-dark': '#B80710', /* Darker Red for hover */
+                        'secondary': '#F0A500', /* Gold/Amber Accent */
+                        'dark-bg': '#141414',
+                        'dark-card': '#1f1f1f',
+                        'dark-text': '#f0f0f0',
+                    }
                 }
             }
-            updateDisplay();
         }
+    </script>
+</head>
+<body class="text-dark-text">
 
-        function clearDisplay() {
-            currentInput = '0';
-            shouldResetDisplay = false;
-            updateDisplay();
-        }
+    <!-- 
+        ======================================================================
+        NAVIGATION BAR (HEADER) - Transparent/Dark
+        ======================================================================
+    -->
+    <header class="sticky top-0 z-50 bg-black/80 shadow-2xl">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0">
+                    <a href="#hero" class="text-3xl font-extrabold text-primary hover:text-white transition duration-300">
+                        SARTHAK SONI
+                    </a>
+                </div>
 
-        function deleteLast() {
-            if (currentInput.length > 1) {
-                currentInput = currentInput.slice(0, -1);
-            } else {
-                currentInput = '0';
-            }
-            updateDisplay();
-        }
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-10">
+                    <a href="#episodes" class="text-gray-300 hover:text-primary transition duration-300 font-medium">Episodes</a>
+                    <a href="#projects" class="text-gray-300 hover:text-primary transition duration-300 font-medium">Case Studies</a>
+                    <a href="#contact" class="text-gray-300 hover:text-primary transition duration-300 font-medium">Connect</a>
+                </div>
 
-        function calculate() {
-            try {
-                // Replace × with * for calculation
-                let expression = currentInput.replace(/×/g, '*');
-                
-                // Validate expression
-                if (!/^[0-9+\-*/. ]+$/.test(expression)) {
-                    throw new Error('Invalid expression');
-                }
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-primary p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="md:hidden hidden bg-black/90">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#episodes" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-primary/20 hover:text-primary">Episodes</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-primary/20 hover:text-primary">Case Studies</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-primary/20 hover:text-primary">Connect</a>
+            </div>
+        </div>
+    </header>
 
-                // Evaluate the expression
-                let result = Function('"use strict"; return (' + expression + ')')();
-                
-                // Round to avoid floating point errors
-                result = Math.round(result * 100000000) / 100000000;
-                
-                currentInput = result.toString();
-                shouldResetDisplay = true;
-                updateDisplay();
-            } catch (error) {
-                currentInput = 'Error';
-                shouldResetDisplay = true;
-                updateDisplay();
-                setTimeout(() => {
-                    clearDisplay();
-                }, 2000);
-            }
-        }
+    <main>
+        <!-- 
+            ======================================================================
+            HERO SECTION - The 'Featured Title'
+            ======================================================================
+        -->
+        <section id="hero" class="relative bg-dark-bg py-24 md:py-36 overflow-hidden border-b-4 border-primary">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:flex lg:items-center lg:justify-between">
+                    <!-- Text Content -->
+                    <div class="lg:w-3/4">
+                        <span class="text-xl font-bold uppercase text-secondary tracking-widest block mb-4">
+                            NOW STREAMING
+                        </span>
+                        <h1 class="text-6xl font-extrabold tracking-tighter sm:text-7xl md:text-8xl leading-tight">
+                            The Soni <span class="text-primary">Strategy.</span>
+                        </h1>
+                        <p class="mt-6 text-2xl text-gray-300 max-w-3xl">
+                            Analytical and impact-driven professional with a robust foundation in Data Analytics, Product Thinking, and Business Consulting**. Eager to drive innovation and strategic growth.
+                        </p>
+                        <div class="mt-10 flex space-x-4">
+                            <a href="#episodes" class="cta-button bg-primary text-white font-semibold py-3 px-8 text-lg rounded-lg shadow-lg hover:bg-primary-dark flex items-center">
+                                <i data-lucide="play" class="w-5 h-5 mr-2 fill-white"></i> Start Watching (Episodes)
+                            </a>
+                            <a href="#projects" class="cta-button bg-gray-600 text-white font-semibold py-3 px-8 text-lg rounded-lg shadow-md hover:bg-gray-500 flex items-center">
+                                <i data-lucide="monitor" class="w-5 h-5 mr-2"></i> Featured Content
+                            </a>
+                        </div>
+                    </div>
 
-        // Keyboard support
-        document.addEventListener('keydown', function(event) {
-            const key = event.key;
+                    <!-- Image Placeholder (Moved to the side for profile photo) -->
+                    <div class="hidden lg:block lg:w-1/4 flex justify-end">
+                        <div class="w-48 h-48 bg-gray-700 rounded-full flex items-center justify-center shadow-xl border-4 border-gray-600 overflow-hidden">
+                            <img 
+                                src="https://placehold.co/200x200/E50914/ffffff?text=Profile" 
+                                alt="Sarthak Soni Professional Photo" 
+                                class="w-full h-full object-cover" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/200x200/E50914/ffffff?text=Profile';"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            ======================================================================
+            EPISODES SECTION (Work Experience)
+            ======================================================================
+        -->
+        <section id="episodes" class="bg-[#1f1f1f] py-16 md:py-24 border-t-4 border-gray-700">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-extrabold text-white sm:text-5xl">
+                        The Sarthak Soni Story: Episode Guide
+                    </h2>
+                    <p class="mt-4 text-xl text-gray-400">
+                        My professional journey, highlighting key roles and impact.
+                    </p>
+                </div>
+
+                <div class="mt-12 space-y-12">
+                    
+                    <!-- Season 1: EY (The Consultant Arc) -->
+                    <div class="bg-dark-card p-8 rounded-xl shadow-2xl border-l-4 border-primary">
+                        <h3 class="text-3xl font-bold text-white mb-6 flex items-center">
+                            <i data-lucide="monitor-play" class="w-7 h-7 text-primary mr-3"></i> Season 1: The EY Consulting Arc
+                        </h3>
+                        
+                        <!-- Episode 1: Associate Consultant (Present) -->
+                        <div class="mb-6 p-4 border-b border-gray-700 last:border-b-0">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-semibold text-gray-200">Episode 2: Associate Consultant | EY (Aug 2024 - Present)</h4>
+                                <span class="text-sm font-medium text-secondary">Present</span>
+                            </div>
+                            <ul class="text-gray-400 mt-2 space-y-1 text-base ml-5 list-disc">
+                                <li>Pioneered a first-of-its-kind **3-month partnership with EY South Africa**, evaluating tech systems and operational risks for one of Africa's largest banks.</li>
+                                <li>**Spearheaded** a high-impact engagement with EY Dubai for a global supply chain giant, leading end-to-end IT risk and compliance analysis.</li>
+                                <li>Contributed to projects with industry leaders (Accenture, Nykaa, Vodafone) providing strategic insights on IT risk management.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Episode 2: Senior Analyst (Past) -->
+                        <div class="p-4 border-b border-gray-700 last:border-b-0">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-semibold text-gray-200">Episode 1: Senior Analyst | EY (Aug 2023 - Aug 2024)</h4>
+                                <span class="text-sm font-medium text-secondary">Completed</span>
+                            </div>
+                            <ul class="text-gray-400 mt-2 space-y-1 text-base ml-5 list-disc">
+                                <li>Synthesized complex data into actionable insights and presented clear recommendations to stakeholders.</li>
+                                <li>Led integration of advanced engineering software, **increasing project accuracy by 15%**.</li>
+                                <li>Developed streamlined data management practices to enhance information accessibility and security.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Season 2: AIESEC (The Leadership Arc) -->
+                    <div class="bg-dark-card p-8 rounded-xl shadow-2xl border-l-4 border-secondary">
+                         <h3 class="text-3xl font-bold text-white mb-6 flex items-center">
+                            <i data-lucide="users-2" class="w-7 h-7 text-secondary mr-3"></i> Season 2: The AIESEC Leadership Arc
+                        </h3>
+
+                        <!-- Episode 1: Product Head -->
+                        <div class="p-4 border-b border-gray-700 last:border-b-0">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-semibold text-gray-200">Episode 1: Product Head of Incoming Sector | AIESEC (Feb 2022 - Jan 2023)</h4>
+                                <span class="text-sm font-medium text-primary-dark">Critical Mission</span>
+                            </div>
+                            <ul class="text-gray-400 mt-2 space-y-1 text-base ml-5 list-disc">
+                                <li>Directed a diverse team of 30 professionals in Mumbai, spearheading client acquisition and expanding strategic partnerships.</li>
+                                <li>Developed interactive dashboards using Excel/Tableau, driving data-informed decisions that contributed to **revenue exceeding ₹100,000**.</li>
+                                <li>Executed comprehensive candidate assessments to build a strong senior leadership pipeline, enhancing team effectiveness.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 
+            ======================================================================
+            PROJECTS SECTION - Horizontal Rows (The Netflix Vibe)
+            ======================================================================
+        -->
+        <section id="projects" class="py-16 md:py-24 bg-dark-bg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- ROW 1: Data & Leadership Projects -->
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                    <i data-lucide="bar-chart-3" class="w-6 h-6 text-primary mr-3"></i> Featured Content: Data & Analytical Case Studies
+                </h2>
+                <div class="horizontal-row flex space-x-6 pb-6 overflow-x-scroll scrollbar-thin">
+                    
+                    <!-- Project Card 3: UPI Prediction -->
+                    <div class="project-card rounded-xl shadow-xl overflow-hidden flex-shrink-0">
+                        <img 
+                            src="https://placehold.co/300x200/f59e0b/000000?text=90%+Accuracy" 
+                            alt="UPI Prediction Project" 
+                            class="w-full h-40 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/f59e0b/000000?text=90%+Accuracy';"
+                        >
+                        <div class="p-4">
+                            <span class="text-sm font-semibold text-secondary block mb-1">DATA SCIENCE MODEL</span>
+                            <h3 class="text-xl font-bold text-white mb-2 truncate">UPI Transactions Forecasting</h3>
+                            <p class="text-gray-400 text-sm mb-3">
+                                Predicted RBI UPI transaction values using **ARIMA/S-ARIMA** models with **90% Accuracy**.
+                            </p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs font-semibold text-white bg-primary/80 rounded-full px-2 py-0.5">Python</span>
+                                <span class="text-xs font-semibold text-white bg-secondary/80 rounded-full px-2 py-0.5">Time Series</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project Card 4: Stock Market Analysis -->
+                    <div class="project-card rounded-xl shadow-xl overflow-hidden flex-shrink-0">
+                        <img 
+                            src="https://placehold.co/300x200/ef4444/ffffff?text=Tableau+Dashboard" 
+                            alt="Stock Market Analysis Project" 
+                            class="w-full h-40 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/ef4444/ffffff?text=Tableau+Dashboard';"
+                        >
+                        <div class="p-4">
+                            <span class="text-sm font-semibold text-secondary block mb-1">VISUALIZATION</span>
+                            <h3 class="text-xl font-bold text-white mb-2 truncate">Indian Stock Market Portfolio Analysis</h3>
+                            <p class="text-gray-400 text-sm mb-3">
+                                Interactive Tableau dashboards analyzing 20+ sources for data-driven investment decisions.
+                            </p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs font-semibold text-white bg-primary/80 rounded-full px-2 py-0.5">Tableau</span>
+                                <span class="text-xs font-semibold text-white bg-secondary/80 rounded-full px-2 py-0.5">Data Aggregation</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AIESEC Leadership Card (Re-purposed from the first row) -->
+                    <div class="project-card rounded-xl shadow-xl overflow-hidden flex-shrink-0">
+                        <img 
+                            src="https://placehold.co/300x200/E50914/ffffff?text=Leadership+Arc" 
+                            alt="AIESEC Leadership Project" 
+                            class="w-full h-40 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/E50914/ffffff?text=Leadership+Arc';"
+                        >
+                        <div class="p-4">
+                            <span class="text-sm font-semibold text-secondary block mb-1">LEADERSHIP CASE</span>
+                            <h3 class="text-xl font-bold text-white mb-2 truncate">High-Impact Sector Leadership</h3>
+                            <p class="text-gray-400 text-sm mb-3">
+                                Directed a diverse team of 30, drove data-informed decisions, and contributed to revenue exceeding ₹100,000.
+                            </p>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs font-semibold text-white bg-primary/80 rounded-full px-2 py-0.5">Team Management</span>
+                                <span class="text-xs font-semibold text-white bg-secondary/80 rounded-full px-2 py-0.5">Stakeholder Mgt.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            ======================================================================
+            CONTACT SECTION - Cinematic Call to Action
+            ======================================================================
+        -->
+        <section id="contact" class="py-16 md:py-24 bg-dark-bg border-t-4 border-gray-700">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-extrabold text-white sm:text-5xl">
+                        Ready to Collaborate?
+                    </h2>
+                    <p class="mt-4 text-xl text-gray-400">
+                        Let's Talk Business – for opportunities in consulting, strategy, or data projects.
+                    </p>
+                </div>
+
+                <div class="mt-12 max-w-lg mx-auto bg-[#2a2a2a] p-8 rounded-xl shadow-2xl border border-gray-700">
+                    <form onsubmit="handleFormSubmit(event)">
+                        <div class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
+                                <input type="text" id="name" name="name" required 
+                                       class="mt-1 block w-full px-4 py-3 bg-[#1f1f1f] border border-gray-600 rounded-lg shadow-sm text-white focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                                <input type="email" id="email" name="email" required 
+                                       class="mt-1 block w-full px-4 py-3 bg-[#1f1f1f] border border-gray-600 rounded-lg shadow-sm text-white focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
+                                <textarea id="message" name="message" rows="4" required 
+                                          class="mt-1 block w-full px-4 py-3 bg-[#1f1f1f] border border-gray-600 rounded-lg shadow-sm text-white focus:ring-primary focus:border-primary"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="cta-button w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300 text-lg">
+                                    <i data-lucide="send" class="w-5 h-5 inline mr-2"></i> Send Engagement Request
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="contact-message" class="mt-4 text-center text-sm font-medium hidden"></div>
+                </div>
+
+                <!-- Direct Links -->
+                <div class="mt-12 text-center flex justify-center space-x-8">
+                    <a href="mailto:sarthaksoni06@gmail.com" class="text-primary hover:text-white transition duration-300 flex items-center font-medium">
+                        <i data-lucide="mail" class="w-5 h-5 mr-2"></i> sarthaksoni06@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/sarthak-soni" target="_blank" class="text-primary hover:text-white transition duration-300 flex items-center font-medium">
+                        <i data-lucide="linkedin" class="w-5 h-5 mr-2"></i> LinkedIn
+                    </a>
+                     <div class="text-gray-500 flex items-center font-medium">
+                        <i data-lucide="map-pin" class="w-5 h-5 mr-2"></i> Mumbai, India
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 
+        ======================================================================
+        FOOTER
+        ======================================================================
+    -->
+    <footer class="bg-black text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Sarthak Soni Portfolio. All rights reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">The Strategic Portfolio Experience.</p>
+        </div>
+    </footer>
+
+    <!-- 
+        ======================================================================
+        JAVASCRIPT FOR INTERACTIVITY
+        ======================================================================
+    -->
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', (event) => {
+            lucide.createIcons();
             
-            if (key >= '0' && key <= '9') {
-                appendNumber(key);
-            } else if (key === '.') {
-                appendOperator('.');
-            } else if (key === '+') {
-                appendOperator('+');
-            } else if (key === '-') {
-                appendOperator('-');
-            } else if (key === '*') {
-                appendOperator('*');
-            } else if (key === '/') {
-                event.preventDefault();
-                appendOperator('/');
-            } else if (key === 'Enter' || key === '=') {
-                event.preventDefault();
-                calculate();
-            } else if (key === 'Escape' || key === 'c' || key === 'C') {
-                clearDisplay();
-            } else if (key === 'Backspace') {
-                deleteLast();
-            }
+            // Re-initialize icons after DOM changes if needed, but for a static page, once is enough.
         });
+
+        // 1. Mobile Menu Toggle Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenu.classList.toggle('hidden');
+            menuIconOpen.classList.toggle('hidden', !isExpanded);
+            menuIconClose.classList.toggle('hidden', isExpanded);
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+
+
+        // 2. Simple Form Submission Handler (Mock)
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const messageDiv = document.getElementById('contact-message');
+
+            // Simulate form submission process
+            messageDiv.classList.remove('hidden');
+            messageDiv.textContent = "Sending message...";
+            messageDiv.classList.remove('text-red-500');
+            messageDiv.classList.add('text-gray-400');
+            
+            setTimeout(() => {
+                // In a real application, you would send data to a backend API here.
+                // Since this is a static template, we'll just show a success message.
+                messageDiv.textContent = "Success! Your request has been logged. I'll connect soon.";
+                messageDiv.classList.remove('text-gray-400');
+                messageDiv.classList.add('text-primary'); // Use primary (red) for success message
+                form.reset();
+            }, 1500);
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe | Professional Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Tailwind Configuration for the 'Inter' font */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        /* Style for the button hover effect */
+        .cta-button { transition: background-color 0.3s, transform 0.2s; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4); }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
+        .project-card { transition: all 0.3s ease-in-out; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#4f46e5', /* Indigo 600 */
+                        'primary-dark': '#4338ca', /* Indigo 700 */
+                        'secondary': '#10b981', /* Emerald 500 */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+    <!-- 
+        ======================================================================
+        NAVIGATION BAR (HEADER)
+        ======================================================================
+    -->
+    <header class="sticky top-0 z-50 bg-white shadow-lg">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0">
+                    <a href="#hero" class="text-2xl font-extrabold text-primary hover:text-primary-dark transition duration-300">
+                        Jane Doe
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-gray-600 hover:text-primary transition duration-300 font-medium">About</a>
+                    <a href="#projects" class="text-gray-600 hover:text-primary transition duration-300 font-medium">Projects</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary transition duration-300 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-primary p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">About</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">Projects</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-primary/10 hover:text-primary">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 
+            ======================================================================
+            HERO SECTION
+            ======================================================================
+        -->
+        <section id="hero" class="relative bg-white py-16 md:py-24 overflow-hidden">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:flex lg:items-center lg:justify-between">
+                    <!-- Text Content -->
+                    <div class="lg:w-1/2">
+                        <span class="text-sm font-semibold uppercase text-secondary tracking-widest">
+                            Software Developer & UX Enthusiast
+                        </span>
+                        <h1 class="mt-4 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl">
+                            Hi, I'm <span class="text-primary">Jane Doe</span>
+                        </h1>
+                        <p class="mt-6 text-xl text-gray-600 max-w-lg">
+                            Building responsive, highly performant web applications and creating intuitive user experiences. Let's create something impactful.
+                        </p>
+                        <div class="mt-10 flex space-x-4">
+                            <a href="#projects" class="cta-button bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-primary-dark">
+                                View My Work
+                            </a>
+                            <a href="#contact" class="cta-button bg-gray-200 text-gray-800 font-semibold py-3 px-8 rounded-full shadow-md hover:bg-gray-300">
+                                Get In Touch
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Image/Illustration Placeholder -->
+                    <div class="mt-12 lg:mt-0 lg:w-1/2 flex justify-center lg:justify-end">
+                        <div class="w-64 h-64 sm:w-80 sm:h-80 bg-gray-300 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden">
+                            <!-- Placeholder for your professional photo or avatar -->
+                            <img 
+                                src="https://placehold.co/320x320/e2e8f0/333333?text=Professional+Photo" 
+                                alt="Jane Doe Professional Photo" 
+                                class="w-full h-full object-cover" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/320x320/e2e8f0/333333?text=Professional+Photo';"
+                            >
+                            <div class="absolute inset-0 bg-primary/10 rounded-full mix-blend-multiply"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            ======================================================================
+            ABOUT ME SECTION
+            ======================================================================
+        -->
+        <section id="about" class="bg-gray-50 py-16 md:py-24">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                        About Me
+                    </h2>
+                    <p class="mt-4 text-xl text-gray-600">
+                        A brief story of my journey, skills, and professional focus.
+                    </p>
+                </div>
+
+                <div class="mt-12 lg:grid lg:grid-cols-3 lg:gap-12">
+                    <!-- Experience/Bio Text -->
+                    <div class="lg:col-span-2 space-y-6 text-lg text-gray-700">
+                        <p>
+                            I am a passionate developer with four years of experience specializing in the **MERN stack (MongoDB, Express, React, Node.js)**. My career has been focused on transforming complex business requirements into intuitive, high-performance web applications. I thrive in environments where I can leverage modern technologies to solve real-world problems.
+                        </p>
+                        <p>
+                            My background is rooted in clean code architecture and agile methodologies. I believe that exceptional software is a blend of technical excellence and a deep understanding of user needs. Beyond coding, I enjoy mentoring junior developers and contributing to open-source projects.
+                        </p>
+                        <p>
+                            When I'm not writing code, you can find me exploring new UI/UX design trends or hiking in the local mountains. I am currently looking for opportunities that involve building scalable, user-centric platforms.
+                        </p>
+                    </div>
+
+                    <!-- Skills List -->
+                    <div class="mt-10 lg:mt-0 lg:col-span-1">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                            <i data-lucide="zap" class="w-6 h-6 text-primary mr-2"></i> My Core Skills
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary/10 text-primary-dark text-sm font-medium rounded-full">React & Next.js</span>
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm font-medium rounded-full">Node.js / Express</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary-dark text-sm font-medium rounded-full">Tailwind CSS</span>
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm font-medium rounded-full">TypeScript</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary-dark text-sm font-medium rounded-full">RESTful APIs</span>
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm font-medium rounded-full">MongoDB & SQL</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary-dark text-sm font-medium rounded-full">AWS/Cloud</span>
+                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm font-medium rounded-full">Git & CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            ======================================================================
+            PROJECTS SECTION
+            ======================================================================
+        -->
+        <section id="projects" class="py-16 md:py-24 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                        Featured Projects
+                    </h2>
+                    <p class="mt-4 text-xl text-gray-600">
+                        A curated selection of my best work demonstrating process and impact.
+                    </p>
+                </div>
+
+                <div class="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+                    
+                    <!-- Project Card 1: E-commerce Platform -->
+                    <div class="project-card bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+                        <img 
+                            src="https://placehold.co/600x400/4f46e5/ffffff?text=E-Commerce+App" 
+                            alt="E-commerce Dashboard Project Screenshot" 
+                            class="w-full h-48 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=E-Commerce+App';"
+                        >
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">E-commerce Analytics Dashboard</h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                A full-stack application for real-time sales and inventory tracking. Reduced reporting time by 40%.
+                            </p>
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                <span class="text-xs font-semibold text-primary/80 bg-primary/10 rounded-md px-2 py-0.5">React</span>
+                                <span class="text-xs font-semibold text-secondary/80 bg-secondary/10 rounded-md px-2 py-0.5">Node.js</span>
+                                <span class="text-xs font-semibold text-primary/80 bg-primary/10 rounded-md px-2 py-0.5">D3.js</span>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary-dark font-semibold text-sm flex items-center">
+                                View Case Study 
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2: Design System -->
+                    <div class="project-card bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+                        <img 
+                            src="https://placehold.co/600x400/10b981/ffffff?text=Design+System" 
+                            alt="Internal Design System Screenshot" 
+                            class="w-full h-48 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/10b981/ffffff?text=Design+System';"
+                        >
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Internal Component Library</h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Developed a reusable design system using Storybook and React, improving feature velocity by 30%.
+                            </p>
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                <span class="text-xs font-semibold text-primary/80 bg-primary/10 rounded-md px-2 py-0.5">Storybook</span>
+                                <span class="text-xs font-semibold text-secondary/80 bg-secondary/10 rounded-md px-2 py-0.5">TypeScript</span>
+                                <span class="text-xs font-semibold text-primary/80 bg-primary/10 rounded-md px-2 py-0.5">Styled-Components</span>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary-dark font-semibold text-sm flex items-center">
+                                View Documentation
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3: Mobile-First Blog -->
+                    <div class="project-card bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+                        <img 
+                            src="https://placehold.co/600x400/9333ea/ffffff?text=Blog+App" 
+                            alt="Mobile Blog App Screenshot" 
+                            class="w-full h-48 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/9333ea/ffffff?text=Blog+App';"
+                        >
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Grounded Blog Application</h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                A mobile-first, high-speed blog optimized for SEO and accessibility using Next.js.
+                            </p>
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                <span class="text-xs font-semibold text-primary/80 bg-primary/10 rounded-md px-2 py-0.5">Next.js</span>
+                                <span class="text-xs font-semibold text-secondary/80 bg-secondary/10 rounded-md px-2 py-0.5">SSR</span>
+                                <span class="text-xs font-semibold text-primary/80 bg-primary/10 rounded-md px-2 py-0.5">CMS Integration</span>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary-dark font-semibold text-sm flex items-center">
+                                Visit Live Site 
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+            ======================================================================
+            CONTACT SECTION
+            ======================================================================
+        -->
+        <section id="contact" class="py-16 md:py-24 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                        Let's Talk
+                    </h2>
+                    <p class="mt-4 text-xl text-gray-600">
+                        I'm currently open to new opportunities and collaborations.
+                    </p>
+                </div>
+
+                <div class="mt-12 max-w-lg mx-auto bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
+                    <form onsubmit="handleFormSubmit(event)">
+                        <div class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                <input type="text" id="name" name="name" required 
+                                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" required 
+                                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message" name="message" rows="4" required 
+                                          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="cta-button w-full bg-secondary text-white font-semibold py-3 px-4 rounded-full shadow-lg hover:bg-secondary/90 transition duration-300">
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="contact-message" class="mt-4 text-center text-sm font-medium hidden"></div>
+                </div>
+
+                <!-- Direct Links -->
+                <div class="mt-12 text-center flex justify-center space-x-8">
+                    <a href="mailto:jane.doe@example.com" class="text-primary hover:text-primary-dark transition duration-300 flex items-center font-medium">
+                        <i data-lucide="mail" class="w-5 h-5 mr-2"></i> jane.doe@example.com
+                    </a>
+                    <a href="https://linkedin.com/in/janedoe" target="_blank" class="text-primary hover:text-primary-dark transition duration-300 flex items-center font-medium">
+                        <i data-lucide="linkedin" class="w-5 h-5 mr-2"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/janedoe" target="_blank" class="text-primary hover:text-primary-dark transition duration-300 flex items-center font-medium">
+                        <i data-lucide="github" class="w-5 h-5 mr-2"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 
+        ======================================================================
+        FOOTER
+        ======================================================================
+    -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Jane Doe. All rights reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">Handcrafted with <span class="text-red-500">&hearts;</span> and Tailwind CSS.</p>
+        </div>
+    </footer>
+
+    <!-- 
+        ======================================================================
+        JAVASCRIPT FOR INTERACTIVITY
+        ======================================================================
+    -->
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', (event) => {
+            lucide.createIcons();
+            
+            // Re-initialize icons after DOM changes if needed, but for a static page, once is enough.
+        });
+
+        // 1. Mobile Menu Toggle Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenu.classList.toggle('hidden');
+            menuIconOpen.classList.toggle('hidden', !isExpanded);
+            menuIconClose.classList.toggle('hidden', isExpanded);
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+
+
+        // 2. Simple Form Submission Handler (Mock)
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const messageDiv = document.getElementById('contact-message');
+
+            // Simulate form submission process
+            messageDiv.classList.remove('hidden');
+            messageDiv.textContent = "Sending message...";
+            messageDiv.classList.remove('text-red-500');
+            messageDiv.classList.add('text-gray-600');
+            
+            setTimeout(() => {
+                // In a real application, you would send data to a backend API here.
+                // Since this is a static template, we'll just show a success message.
+                messageDiv.textContent = "Thank you for your message! I will be in touch shortly.";
+                messageDiv.classList.remove('text-gray-600');
+                messageDiv.classList.add('text-secondary');
+                form.reset();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
